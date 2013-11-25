@@ -1,0 +1,72 @@
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+
+  <title></title>
+  <script src="dist/main.js" type="text/javascript" charset="utf-8"></script>
+  <!--Load the AJAX API-->
+  <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+  <script type="text/javascript" src="chart.js"> </script>
+  <link rel="stylesheet" href="main.css" title="" type="text/css" />
+</head>
+<body>
+  <input type="text" name="" id="name" value="" />
+  <button id="add-chart">Reset</button>
+  <span id="p"></span>
+  <br />
+  <script type="text/javascript" charset="utf-8">
+    window.y = document.getElementById('name');
+    kid(y);
+    y.focus();
+    window.timeout = null;
+
+    var addChartWithTimeout = function(){
+      if(timeout) clearTimeout(timeout);
+      timeout = setTimeout(addChart, 300);
+    }
+
+    window.a=[];
+    window.b=[];
+    window.val = true;
+    var addChart = function(){
+      val = true;
+      el = document.createElement('div');
+      el.id = Date.now();
+      document.getElementsByTagName('body')[0].appendChild(el);
+      drawChart2(y.kid.all, el.id );
+
+      for(var i = 0; i < y.kid.all.length; i++ ){var j = y.kid.all[i];a.push(j[0]);}
+      b.push(a);
+      for (var i = 1, l = b.length; i < l; i ++) {
+        var v = b[i];
+        for (var j = 0, m = v.length; j < m; j ++) {
+          var k = v[j];
+          if(b[0][j] != k){
+            window.d = [b[0][j], k];
+            console.log(d);
+            i = l;
+            b=[];
+            val = false;
+            break;
+          }
+        }
+      }
+      document.getElementById('p').innerHTML = val;
+      a = [];
+
+      y.kid.clear();
+      y.value = '';
+      y.focus();
+    };
+
+    var btnClicked = function(){
+      while(document.getElementsByTagName('div')[0])
+        document.getElementsByTagName('div')[0].remove();
+      y.focus();
+      val = true;
+    };
+    document.getElementById('add-chart').addEventListener('click', btnClicked)
+    y.addEventListener('keyup', addChartWithTimeout)
+  </script>
+</body>
+</html>
