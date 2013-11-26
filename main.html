@@ -10,63 +10,67 @@
   <link rel="stylesheet" href="main.css" title="" type="text/css" />
 </head>
 <body>
-  <input type="text" name="" id="name" value="" />
+  <input type="text" name="" id="name" matchue="" />
   <button id="add-chart">Reset</button>
-  <span id="p"></span>
+  <span>Orders matched: </span><span id="p"></span>
   <br />
   <script type="text/javascript" charset="utf-8">
-    window.y = document.getElementById('name');
-    kid(y);
-    y.focus();
-    window.timeout = null;
+    var input = document.getElementById('name');
+    var timeout = null;
+
+    kid(input);
+    input.focus();
 
     var addChartWithTimeout = function(){
       if(timeout) clearTimeout(timeout);
       timeout = setTimeout(addChart, 300);
     }
 
-    window.a=[];
-    window.b=[];
-    window.val = true;
+    var currentOrder = [];
+    var orders = [];
+    var match = true;
     var addChart = function(){
-      val = true;
+      match = true;
       el = document.createElement('div');
       el.id = Date.now();
       document.getElementsByTagName('body')[0].appendChild(el);
-      drawChart2(y.kid.all, el.id );
+      drawChart2(input.kid.all, el.id );
 
-      for(var i = 0; i < y.kid.all.length; i++ ){var j = y.kid.all[i];a.push(j[0]);}
-      b.push(a);
-      for (var i = 1, l = b.length; i < l; i ++) {
-        var v = b[i];
-        for (var j = 0, m = v.length; j < m; j ++) {
-          var k = v[j];
-          if(b[0][j] != k){
-            window.d = [b[0][j], k];
-            console.log(d);
+      // Create and append current order
+      for(var i = 0; i < input.kid.all.length; i++ )
+        var j = input.kid.all[i];currentOrder.push(j[0]);
+      orders.push(currentOrder);
+
+
+      // Compare orders, write true if matched
+      for (var i = 1, l = orders.length; i < l; i ++) {
+        var o = orders[i];
+        for (var j = 0, m = o.length; j < m; j ++) {
+          var k = o[j];
+          if(orders[0][j] != k){
             i = l;
-            b=[];
-            val = false;
+            orders = [];
+            match  = false;
             break;
           }
         }
       }
-      document.getElementById('p').innerHTML = val;
-      a = [];
+      document.getElementById('p').innerHTML = match;
+      currentOrder = [];
 
-      y.kid.clear();
-      y.value = '';
-      y.focus();
+      input.kid.clear();
+      input.value = '';
+      input.focus();
     };
 
     var btnClicked = function(){
       while(document.getElementsByTagName('div')[0])
         document.getElementsByTagName('div')[0].remove();
-      y.focus();
-      val = true;
+      input.focus();
+      match = true;
     };
     document.getElementById('add-chart').addEventListener('click', btnClicked)
-    y.addEventListener('keyup', addChartWithTimeout)
+    input.addEventListener('keyup', addChartWithTimeout)
   </script>
 </body>
 </html>
